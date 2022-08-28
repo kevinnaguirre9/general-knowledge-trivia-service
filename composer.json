@@ -6,8 +6,9 @@
     "type": "project",
     "require": {
         "php": "^8.0",
+        "jenssegers/mongodb": "^3.8",
         "laravel/lumen-framework": "^9.0",
-        "jenssegers/mongodb": "^3.8"
+        "ramsey/uuid": "^4.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

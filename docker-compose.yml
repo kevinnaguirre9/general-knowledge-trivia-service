@@ -16,7 +16,7 @@ services:
 
   mongo:
     image: "mongo:5.0"
-    container_name: mongodb-general-knowledge-trivia-service
+    container_name: mongodb-general-knowledge-trivia
     command: mongod --auth
     restart: unless-stopped
     logging:
