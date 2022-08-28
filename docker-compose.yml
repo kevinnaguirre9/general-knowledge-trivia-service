@@ -1,0 +1,41 @@
+version: '3.5'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    container_name: general-knowledge-trivia-service
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+    ports:
+      - "${APP_PORT:-8080}:8080"
+    networks:
+      - general-knowledge-trivia-service-network
+
+  mongo:
+    image: "mongo:5.0"
+    container_name: mongodb-general-knowledge-trivia-service
+    command: mongod --auth
+    restart: unless-stopped
+    logging:
+      driver: none
+    ports:
+      - "${DB_PORT_INTERNAL_LOCALHOST_MONGODB:-27017}:${DB_PORT_MONGODB:-27017}"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USERNAME_MONGODB}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASSWORD_MONGODB}
+    volumes:
+      - /home/$USER/general-knowledge-trivia-service/mongo-data:/data/db
+      - /home/$USER/general-knowledge-trivia-service/mongo-log:/var/log/mongodb/
+    networks:
+      - general-knowledge-trivia-service-network
+
+networks:
+  general-knowledge-trivia-service-network:
+    external:
+      name: general-knowledge-trivia-shared-network
+
+
+# Create external network with 'docker network create general-knowledge-trivia-shared-network' command
