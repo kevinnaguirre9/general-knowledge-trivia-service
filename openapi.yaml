@@ -1,0 +1,568 @@
+openapi: 3.0.0
+info:
+  description: "API contract for General Knowledge Trivia."
+  version: "1.0.0"
+  title: "General Knowledge Trivia"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "ups-team@ups.edu.ec"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    
+tags:
+- name: "Authentication"
+  description: "Authenticate to General Knowledge Trivia game"
+- name: "Categories"
+  description: "Get available trivia categories"
+- name: "Games"
+  description: "Register attempt"
+    
+servers:
+  - url: "http://localhost/v1"
+    description: "Development"
+
+paths:
+  /sign-up:
+    post:
+      tags:
+      - "Authentication"
+      summary: "Authenticate to General Knowledge Trivia"
+      description: ""
+      operationId: "signUp"
+      requestBody:
+        description: "Basic user information to sign up"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  example: Philip
+                last_name:
+                  type: string
+                  example: McLaren 
+                country:
+                  type: string
+                  example: "United States"
+                email:
+                  type: string
+                  example: philip.mclaren@gmail.com 
+                username:
+                  type: string
+                  example: philip.mclaren 
+                password:
+                  type: string
+                  example: "******"    
+              required: 
+                - first_name
+                - last_name
+                - country
+                - email
+                - username
+                - password
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        400:
+          description: "Bad request"
+        409:
+          description: "Conflict"
+          
+  /sign-in:
+    post:
+      tags:
+      - "Authentication"
+      summary: "Authenticate to General Knowledge Trivia"
+      description: ""
+      operationId: "signIn"
+      requestBody:
+        description: "Basic user information to sign up"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: philip.mclaren@gmail.com
+                password:
+                  type: string
+                  example: "******"    
+              required:
+                - email
+                - password
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+        401:
+          description: "Unauthorized"
+        400:
+          description: "Bad request"
+          
+  /log-out:
+    post:
+      tags:
+      - "Authentication"
+      summary: "Authenticate to General Knowledge Trivia"
+      description: ""
+      operationId: "logOut"
+      parameters:
+      - in: "header"
+        name: "token"
+        description: "Bearer token"
+        required: true
+        schema:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+      responses:
+        201:
+          description: "OK"
+        401:
+          description: "Unauthorized"
+  
+  /categories:
+    get:
+      tags:
+      - "Categories"
+      summary: "Get categories"
+      description: ""
+      operationId: "getCategories"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost/v1/categories"
+                  _embedded:
+                    type: object
+                    properties:
+                      categories:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/categories"
+        401:
+          description: "Unauthorized"
+          
+  /categories/{id}/questions:
+    get:
+      tags:
+      - "Categories"
+      summary: "Get category questions"
+      description: ""
+      operationId: "getCategoryQuestions"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Category unique identifier"
+        required: true
+        schema:
+          type: string
+          example: "903f633f-db4a-4947-9af7-b87f28ed2c0f"
+      - in: "header"
+        name: "token"
+        description: "Bearer token"
+        required: true
+        schema:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost/v1/categories/903f633f-db4a-4947-9af7-b87f28ed2c0f/questions"
+                  _embedded:
+                    type: object
+                    properties:
+                      questions:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/questions"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Category not found"
+          
+  /categories/{id}/statistics:
+    get:
+      tags:
+      - "Categories"
+      summary: "Get statistics by category"
+      description: ""
+      operationId: "getCategorySatistics"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Category unique identifier"
+        required: true
+        schema:
+          type: string
+          example: "903f633f-db4a-4947-9af7-b87f28ed2c0f"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                    properties:
+                      self:
+                        type: object
+                        properties:
+                          href:
+                            type: string
+                            example: "http://localhost/v1/categories/903f633f-db4a-4947-9af7-b87f28ed2c0f/statistics"
+                  _embedded:
+                    type: object
+                    properties:
+                      statistics:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/statistics"
+                  pagination:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        example: 100
+                      count:
+                        type: integer
+                        example: 25
+                      per_page:
+                        type: integer
+                        example: 25
+                      current_page:
+                        type: integer
+                        example: 2
+                      total_pages:
+                        type: integer
+                        example: 4
+                      _links:
+                        type: object
+                        properties:
+                          previous:
+                            type: string
+                            example: "http://localhost/v1/categories/903f633f-db4a-4947-9af7-b87f28ed2c0f/statistics?page=1"
+                          next:
+                            type: string
+                            example: "http://localhost/v1/categories/903f633f-db4a-4947-9af7-b87f28ed2c0f/statistics?page=3"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Category not found"
+          
+  /games:
+    post:
+      tags:
+      - "Games"
+      summary: "store game attempt"
+      description: ""
+      operationId: "newGame"
+      parameters:
+      - in: "header"
+        name: "token"
+        description: "Bearer token"
+        required: true
+        schema:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_id:
+                  type: string
+                  description: "Category chosed by the player"
+                  example: "903f633f-db4a-4947-9af7-b87f28ed2c0f"
+                answers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      question_id:
+                        type: string
+                        example: "00ee442f-c7e4-495b-b80b-63f354ebcd36"
+                      answer_id:
+                        type: string
+                        example: "918344aa-8654-4e28-98ea-cee4bd4df5ba"  
+                    required: 
+                      - question
+                      - answer
+                time_played:
+                  type: integer
+                  description: "Time played in seconds"
+                  example: 600
+              required: 
+                - category
+                - answers
+                - time_played
+      responses:
+        201:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/games"
+        400:
+          description: "Bad request"
+          
+  /games/{id}:
+    get:
+      tags:
+      - "Games"
+      summary: "Get game information"
+      description: ""
+      operationId: "getGame"
+      parameters:
+      - in: "path"
+        name: "id"
+        description: "Game unique identifier"
+        required: true
+        schema:
+          type: string
+          example: "5764b3a9-f4b2-4f9f-9b62-69afce28ea46"
+      - in: "header"
+        name: "token"
+        description: "Bearer token"
+        required: true
+        schema:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/games"
+        400:
+          description: "Bad request"
+        
+
+          
+components:
+  schemas:
+    categories:
+      title: "The Category object"
+      type: "object"
+      properties:
+        uuid:
+          type: string
+          example: "903f633f-db4a-4947-9af7-b87f28ed2c0f"
+        name:
+          type: string
+          enum:
+            - ENTERTAINMENT
+            - SPORTS
+            - HISTORY
+            - GEOGRAPHY
+        _links:
+          type: object
+          properties:
+            questions:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost/v1/categories/903f633f-db4a-4947-9af7-b87f28ed2c0f/questions"
+            statistics:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost/v1/categories/903f633f-db4a-4947-9af7-b87f28ed2c0f/statistics"
+                  
+    questions:
+      title: "The Question object"
+      type: "object"
+      properties:
+        uuid:
+          type: string
+          example: "00ee442f-c7e4-495b-b80b-63f354ebcd36"
+        question:
+          type: string
+          example: "What is the most sponken language in Switzerland?"
+        answers:
+          type: array
+          items:
+            $ref: "#/components/schemas/answers"
+        _links:
+          type: object
+          
+    answers:
+      title: "The Answer object"
+      type: "object"
+      properties:
+        uuid:
+          type: string
+          example: "918344aa-8654-4e28-98ea-cee4bd4df5ba"
+        answer:
+          type: string
+          example: "Deutsh"
+        is_correct:
+          type: boolean
+          example: true
+          
+    games:
+      title: "The Game object"
+      type: "object"
+      properties:
+        uuid:
+          type: string
+          example: "5764b3a9-f4b2-4f9f-9b62-69afce28ea46"
+        category:
+          type: object
+          properties:
+            uuid: 
+              type: string 
+              example: "903f633f-db4a-4947-9af7-b87f28ed2c0f"
+            name:
+              type: string
+              enum:
+                - ENTERTAINMENT
+                - SPORTS
+                - HISTORY
+                - GEOGRAPHY
+        answers:
+          type: array
+          items:
+            type: object
+            properties:
+              question:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    example: "00ee442f-c7e4-495b-b80b-63f354ebcd36"
+                  question:
+                    type: string
+                    example: "What is the most sponken language in Switzerland?"
+              correct_answer:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    example: "918344aa-8654-4e28-98ea-cee4bd4df5ba"
+                  answer:
+                    type: string
+                    example: "Deutsh"
+              player_answer:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                    example: "918344aa-8654-4e28-98ea-cee4bd4df5ba"
+                  player_Answer:
+                    type: string
+                    example: "Deutsh"
+              correct:
+                type: boolean
+                example: true
+        results:
+          type: object
+          properties:
+            time_played:
+              type: integer
+              example: 600
+            right_answers: 
+              type: integer
+              example: 9
+            wrong_answers:
+              type: integer
+              example: 1
+            correct_answers_percentage:
+              type: number
+              example: 0.9
+        created_at:
+          type: string
+          example: "2022-05-13 21:59:20"
+        _links:
+          type: object
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+                  example: "http://localhost/v1/games/5764b3a9-f4b2-4f9f-9b62-69afce28ea46/"
+      
+    statistics:
+      title: "The Statistic object"
+      type: "object"
+      properties:
+        player:
+          type: string
+          example: "@some-player99"
+        correct_answers:
+          type: integer
+          example: 9
+        wrong_answers:
+          type: integer
+          example: 1
+        time_played:
+          type: integer
+          example: 600
+        country:
+          type: string
+          example: "United States"
+        
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+  
