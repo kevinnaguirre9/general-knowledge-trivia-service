@@ -119,4 +119,10 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
+$app->router->group([
+    'prefix'    => 'v1'
+], function ($router) {
+    require __DIR__.'/../routes/API/v1.php';
+});
+
 return $app;

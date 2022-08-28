@@ -14,7 +14,11 @@ General knowledge Trivia RESTful API for playing trivia/quiz games.
 
 ### Install PHP dependencies
 
-    docker-compose exec app composer install
+    composer install
+
+### Run seeders
+
+    php artisan db:seed --class="CategorySeeder"
 
 ### Licence
 
