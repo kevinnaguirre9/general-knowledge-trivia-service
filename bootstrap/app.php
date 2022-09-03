@@ -78,9 +78,9 @@ $app->configure('database');
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+ $app->routeMiddleware([
+     'auth' => App\Http\Middleware\Authenticate::class,
+ ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -97,9 +97,10 @@ $app->register(App\Providers\AppServiceProvider::class);
 
 $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 
+$app->register(App\Providers\AuthServiceProvider::class);
+
 $app->withEloquent();
 
-// $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 /*

@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Gate;
+use GeneralKnowledgeTrivia\Domain\User\User;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AuthServiceProvider
+ *
+ * @package App\Providers
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     /**

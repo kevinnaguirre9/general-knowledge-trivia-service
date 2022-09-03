@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use GeneralKnowledgeTrivia\Domain\Category\Category;
-use GeneralKnowledgeTrivia\Domain\Category\CategoryId;
+use GeneralKnowledgeTrivia\Domain\Category\ValueObjects\CategoryId;
 use GeneralKnowledgeTrivia\Domain\Common\Exceptions\InvalidUuid;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;

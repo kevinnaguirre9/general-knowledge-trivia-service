@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use GeneralKnowledgeTrivia\Domain\Common\Exceptions\InvalidUuid;
 use GeneralKnowledgeTrivia\Domain\Question\Answer;
-use GeneralKnowledgeTrivia\Domain\Question\AnswerId;
 use GeneralKnowledgeTrivia\Domain\Question\Question;
-use GeneralKnowledgeTrivia\Domain\Question\QuestionId;
+use GeneralKnowledgeTrivia\Domain\Question\ValueObjects\AnswerId;
+use GeneralKnowledgeTrivia\Domain\Question\ValueObjects\QuestionId;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
 
