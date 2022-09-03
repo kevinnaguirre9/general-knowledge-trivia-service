@@ -117,8 +117,8 @@ paths:
         400:
           description: "Bad request"
 
-  /log-out:
-    post:
+  /sign-out:
+    delete:
       tags:
       - "Authentication"
       summary: "Authenticate to General Knowledge Trivia"
@@ -133,7 +133,7 @@ paths:
           type: string
           example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
       responses:
-        201:
+        200:
           description: "OK"
         401:
           description: "Unauthorized"

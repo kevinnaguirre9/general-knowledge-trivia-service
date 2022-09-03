@@ -9,7 +9,6 @@ use GeneralKnowledgeTrivia\Domain\User\Exceptions\InvalidPassword;
 use GeneralKnowledgeTrivia\Domain\User\Exceptions\UserNotFound;
 use GeneralKnowledgeTrivia\Services\Auth\Authenticate\AuthenticateUserCommand;
 use GeneralKnowledgeTrivia\Services\Auth\Authenticate\UserAuthenticator;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -29,13 +28,13 @@ final class AuthSignInPostController extends Controller
 
     /**
      * @param Request $request
-     * @return JsonResponse
+     * @return Response
      * @throws InvalidEmail
      * @throws InvalidPassword
      * @throws UserNotFound
      * @throws InvalidAuthCredentials
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request): Response
     {
         $AuthenticateUserCommand = new AuthenticateUserCommand(
             $request->get('email'),
@@ -44,8 +43,10 @@ final class AuthSignInPostController extends Controller
 
         $token = ($this->authenticator)($AuthenticateUserCommand);
 
-        return response()->json([
-            'token' => $token,
-        ], Response::HTTP_OK);
+        return new Response(
+            json_encode(['token' => $token], JSON_UNESCAPED_SLASHES),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/json']
+        );
     }
 }
