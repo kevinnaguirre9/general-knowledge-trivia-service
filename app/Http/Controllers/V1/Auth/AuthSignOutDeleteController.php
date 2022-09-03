@@ -35,6 +35,6 @@ final class AuthSignOutDeleteController extends Controller
 
         return response()->json([
             'message' => 'Signed out successfully'
-        ], Response::HTTP_CREATED);
+        ], Response::HTTP_OK);
     }
 }
