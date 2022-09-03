@@ -2,10 +2,15 @@
 
 namespace App\Providers;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Gate;
+use GeneralKnowledgeTrivia\Domain\User\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AuthServiceProvider
+ *
+ * @package App\Providers
+ */
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -30,10 +35,13 @@ class AuthServiceProvider extends ServiceProvider
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
 
-        $this->app['auth']->viaRequest('api', function ($request) {
-            if ($request->input('api_token')) {
-                return User::where('api_token', $request->input('api_token'))->first();
-            }
+        $this->app['auth']->viaRequest('api', function (Request $request) {
+
+            $token = $request->bearerToken();
+
+            return $token
+                ? User::firstWhere('token', '=', $token)
+                : null;
         });
     }
 }

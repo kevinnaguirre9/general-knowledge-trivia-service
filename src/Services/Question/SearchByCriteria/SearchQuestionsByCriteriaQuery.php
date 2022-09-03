@@ -7,7 +7,7 @@ namespace GeneralKnowledgeTrivia\Services\Question\SearchByCriteria;
 /**
  * Class SearchQuestionsByCriteriaQuery
  *
- * @package GeneralKnowledgeTrivia\Services\Question\Search
+ * @package GeneralKnowledgeTrivia\Services\Question\SearchByCriteria
  */
 final class SearchQuestionsByCriteriaQuery
 {

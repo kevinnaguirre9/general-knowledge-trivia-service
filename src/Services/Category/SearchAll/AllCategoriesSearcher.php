@@ -7,7 +7,7 @@ use GeneralKnowledgeTrivia\Domain\Category\Category;
 /**
  * Class AllCategoriesSearcher
  *
- * @package GeneralKnowledgeTrivia\Services\Category
+ * @package GeneralKnowledgeTrivia\Services\Category\SearchAll
  */
 final class AllCategoriesSearcher
 {
