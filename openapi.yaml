@@ -9,7 +9,7 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-    
+
 tags:
 - name: "Authentication"
   description: "Authenticate to General Knowledge Trivia game"
@@ -17,7 +17,7 @@ tags:
   description: "Get available trivia categories"
 - name: "Games"
   description: "Register attempt"
-    
+
 servers:
   - url: "http://localhost/v1"
     description: "Development"
@@ -42,20 +42,20 @@ paths:
                   example: Philip
                 last_name:
                   type: string
-                  example: McLaren 
+                  example: McLaren
                 country:
                   type: string
                   example: "United States"
                 email:
                   type: string
-                  example: philip.mclaren@gmail.com 
+                  example: philip.mclaren@gmail.com
                 username:
                   type: string
-                  example: philip.mclaren 
+                  example: philip.mclaren
                 password:
                   type: string
-                  example: "******"    
-              required: 
+                  example: "******"
+              required:
                 - first_name
                 - last_name
                 - country
@@ -77,7 +77,7 @@ paths:
           description: "Bad request"
         409:
           description: "Conflict"
-          
+
   /sign-in:
     post:
       tags:
@@ -97,7 +97,7 @@ paths:
                   example: philip.mclaren@gmail.com
                 password:
                   type: string
-                  example: "******"    
+                  example: "******"
               required:
                 - email
                 - password
@@ -116,7 +116,7 @@ paths:
           description: "Unauthorized"
         400:
           description: "Bad request"
-          
+
   /log-out:
     post:
       tags:
@@ -137,7 +137,7 @@ paths:
           description: "OK"
         401:
           description: "Unauthorized"
-  
+
   /categories:
     get:
       tags:
@@ -171,7 +171,7 @@ paths:
                           $ref: "#/components/schemas/categories"
         401:
           description: "Unauthorized"
-          
+
   /categories/{id}/questions:
     get:
       tags:
@@ -222,7 +222,7 @@ paths:
           description: "Unauthorized"
         404:
           description: "Category not found"
-          
+
   /categories/{id}/statistics:
     get:
       tags:
@@ -293,7 +293,7 @@ paths:
           description: "Unauthorized"
         404:
           description: "Category not found"
-          
+
   /games:
     post:
       tags:
@@ -330,15 +330,15 @@ paths:
                         example: "00ee442f-c7e4-495b-b80b-63f354ebcd36"
                       answer_id:
                         type: string
-                        example: "918344aa-8654-4e28-98ea-cee4bd4df5ba"  
-                    required: 
+                        example: "918344aa-8654-4e28-98ea-cee4bd4df5ba"
+                    required:
                       - question
                       - answer
                 time_played:
                   type: integer
                   description: "Time played in seconds"
                   example: 600
-              required: 
+              required:
                 - category
                 - answers
                 - time_played
@@ -351,7 +351,7 @@ paths:
                 $ref: "#/components/schemas/games"
         400:
           description: "Bad request"
-          
+
   /games/{id}:
     get:
       tags:
@@ -383,9 +383,9 @@ paths:
                 $ref: "#/components/schemas/games"
         400:
           description: "Bad request"
-        
 
-          
+
+
 components:
   schemas:
     categories:
@@ -417,7 +417,7 @@ components:
                 href:
                   type: string
                   example: "http://localhost/v1/categories/903f633f-db4a-4947-9af7-b87f28ed2c0f/statistics"
-                  
+
     questions:
       title: "The Question object"
       type: "object"
@@ -428,13 +428,16 @@ components:
         question:
           type: string
           example: "What is the most sponken language in Switzerland?"
+        category_id:
+          type: string
+          example: "903f633f-db4a-4947-9af7-b87f28ed2c0f"
         answers:
           type: array
           items:
             $ref: "#/components/schemas/answers"
         _links:
           type: object
-          
+
     answers:
       title: "The Answer object"
       type: "object"
@@ -448,7 +451,7 @@ components:
         is_correct:
           type: boolean
           example: true
-          
+
     games:
       title: "The Game object"
       type: "object"
@@ -459,8 +462,8 @@ components:
         category:
           type: object
           properties:
-            uuid: 
-              type: string 
+            uuid:
+              type: string
               example: "903f633f-db4a-4947-9af7-b87f28ed2c0f"
             name:
               type: string
@@ -510,7 +513,7 @@ components:
             time_played:
               type: integer
               example: 600
-            right_answers: 
+            right_answers:
               type: integer
               example: 9
             wrong_answers:
@@ -531,7 +534,7 @@ components:
                 href:
                   type: string
                   example: "http://localhost/v1/games/5764b3a9-f4b2-4f9f-9b62-69afce28ea46/"
-      
+
     statistics:
       title: "The Statistic object"
       type: "object"
@@ -551,18 +554,17 @@ components:
         country:
           type: string
           example: "United States"
-        
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
