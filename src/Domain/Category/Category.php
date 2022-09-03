@@ -2,7 +2,9 @@
 
 namespace GeneralKnowledgeTrivia\Domain\Category;
 
+use GeneralKnowledgeTrivia\Domain\Question\Question;
 use Jenssegers\Mongodb\Eloquent\Model;
+use Jenssegers\Mongodb\Relations\HasMany;
 
 /**
  * Class Category
@@ -35,4 +37,12 @@ final class Category extends Model
     protected $hidden = [
 
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class);
+    }
 }
