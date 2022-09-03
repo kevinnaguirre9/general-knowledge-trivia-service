@@ -31,6 +31,17 @@ final class Question extends Model
     ];
 
     /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var string[]
+     */
+    protected $hidden = [
+        '_id',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
      * @return BelongsTo
      */
     public function category(): BelongsTo
