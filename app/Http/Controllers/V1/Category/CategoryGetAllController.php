@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\V1\Category;
 
 use App\Http\Controllers\Controller;
-use GeneralKnowledgeTrivia\Services\Category\CategorySearcher;
+use GeneralKnowledgeTrivia\Services\Category\SearchAll\AllCategoriesSearcher;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 
@@ -15,9 +15,9 @@ use Illuminate\Http\Response;
 final class CategoryGetAllController extends Controller
 {
     /**
-     * @param CategorySearcher $searcher
+     * @param AllCategoriesSearcher $searcher
      */
-    public function __construct(private CategorySearcher $searcher)
+    public function __construct(private AllCategoriesSearcher $searcher)
     {
     }
 

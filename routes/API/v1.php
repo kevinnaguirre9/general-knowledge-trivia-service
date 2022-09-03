@@ -17,3 +17,8 @@ $router->get('/categories', [
     'as'    => 'categories.getAll',
     'uses'  => \App\Http\Controllers\V1\Category\CategoryGetAllController::class,
 ]);
+
+$router->get('/categories/{category}/questions', [
+    'as'    => 'categories.getQuestions',
+    'uses'  => \App\Http\Controllers\V1\Question\QuestionGetController::class,
+]);

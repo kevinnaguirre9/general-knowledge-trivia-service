@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use GeneralKnowledgeTrivia\Domain\Category\Category;
 use GeneralKnowledgeTrivia\Domain\Category\CategoryId;
+use GeneralKnowledgeTrivia\Domain\Common\Exceptions\InvalidUuid;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Log;
 
@@ -14,12 +15,13 @@ use Illuminate\Support\Facades\Log;
  */
 final class CategorySeeder extends Seeder
 {
-    private const BASE_CATEGORIES_PATH = __DIR__ . '/categories.json';
+    private const BASE_CATEGORIES = __DIR__ . '/categories.json';
 
     /**
      * Run the database seeds.
      *
      * @return void
+     * @throws InvalidUuid
      */
     public function run()
     {
@@ -28,24 +30,29 @@ final class CategorySeeder extends Seeder
 
     /**
      * @return void
+     * @throws InvalidUuid
      */
     private function createBaseCategories(): void
     {
-        if(!file_exists(self::BASE_CATEGORIES_PATH)) {
-            Log::info("Base categories json file not found");
+        if(!file_exists(self::BASE_CATEGORIES)) {
+            Log::info("Base categories file not found");
             return;
         }
 
         $categories = json_decode(
-            file_get_contents(self::BASE_CATEGORIES_PATH),
+            file_get_contents(self::BASE_CATEGORIES),
             true,
         );
 
         collect($categories)->each(function ($Category) {
-            Category::create([
-               'uuid' => (new CategoryId())->value(),
-               ...$Category,
-           ]);
+
+            $CategoryId = new CategoryId(data_get($Category,'uuid'));
+
+            $CategoryAttributes = array_merge([
+                'uuid' => $CategoryId
+            ], $Category);
+
+            Category::create($CategoryAttributes);
         });
     }
 }

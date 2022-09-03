@@ -1,15 +1,15 @@
 <?php
 
-namespace GeneralKnowledgeTrivia\Services\Category;
+namespace GeneralKnowledgeTrivia\Services\Category\SearchAll;
 
 use GeneralKnowledgeTrivia\Domain\Category\Category;
 
 /**
- * Class CategorySearcher
+ * Class AllCategoriesSearcher
  *
  * @package GeneralKnowledgeTrivia\Services\Category
  */
-final class CategorySearcher
+final class AllCategoriesSearcher
 {
     /**
      * @return array

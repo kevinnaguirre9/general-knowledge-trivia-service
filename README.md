@@ -16,9 +16,9 @@ General knowledge Trivia RESTful API for playing trivia/quiz games.
 
     composer install
 
-### Run seeders
+### Run database seeders
 
-    php artisan db:seed --class="CategorySeeder"
+    php artisan db:seed
 
 ### Licence
 
