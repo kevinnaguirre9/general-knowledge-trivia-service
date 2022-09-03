@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\V1\Auth;
 
 use App\Http\Controllers\Controller;
+use GeneralKnowledgeTrivia\Services\Auth\Deauthenticate\DeauthenticateUserCommand;
+use GeneralKnowledgeTrivia\Services\Auth\Deauthenticate\UserDeauthenticator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Class AuthSignOutDeleteController
@@ -14,9 +17,9 @@ use Illuminate\Http\Request;
 final class AuthSignOutDeleteController extends Controller
 {
     /**
-     *
+     * @param UserDeauthenticator $deauthenticator
      */
-    public function __construct()
+    public function __construct(private UserDeauthenticator $deauthenticator)
     {
     }
 
@@ -26,7 +29,12 @@ final class AuthSignOutDeleteController extends Controller
      */
     public function __invoke(Request $request): JsonResponse
     {
-        return response()
-            ->json([], Response::HTTP_CREATED);
+        $command = new DeauthenticateUserCommand($request->bearerToken());
+
+        ($this->deauthenticator)($command);
+
+        return response()->json([
+            'message' => 'Signed out successfully'
+        ], Response::HTTP_CREATED);
     }
 }

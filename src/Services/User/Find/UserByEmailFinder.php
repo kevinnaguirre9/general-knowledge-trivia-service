@@ -14,9 +14,9 @@ final class UserByEmailFinder
 {
     /**
      * @param Email $email
-     * @return mixed
+     * @return User|null
      */
-    public function __invoke(Email $email): mixed
+    public function __invoke(Email $email): ?User
     {
         return User::firstWhere('email', '=', $email->value());
     }

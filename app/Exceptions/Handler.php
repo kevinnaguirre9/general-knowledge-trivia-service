@@ -2,10 +2,13 @@
 
 namespace App\Exceptions;
 
+use GeneralKnowledgeTrivia\Domain\Auth\Exceptions\InvalidAuthCredentials;
+use GeneralKnowledgeTrivia\Domain\Auth\Exceptions\InvalidToken;
 use GeneralKnowledgeTrivia\Domain\Common\Exceptions\InvalidUuid;
 use GeneralKnowledgeTrivia\Domain\User\Exceptions\InvalidEmail;
 use GeneralKnowledgeTrivia\Domain\User\Exceptions\InvalidPassword;
 use GeneralKnowledgeTrivia\Domain\User\Exceptions\UserAlreadyRegistered;
+use GeneralKnowledgeTrivia\Domain\User\Exceptions\UserNotFound;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
@@ -53,14 +56,15 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected array $notFoundExceptions = [
-
+        UserNotFound::class,
     ];
 
     /**
      * @var string[]
      */
     protected array $unauthorizedExceptions = [
-
+        InvalidAuthCredentials::class,
+        InvalidToken::class,
     ];
 
     /**
