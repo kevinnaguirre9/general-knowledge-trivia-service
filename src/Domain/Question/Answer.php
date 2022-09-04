@@ -17,6 +17,16 @@ final class Answer extends Model
     protected $collection = 'answers';
 
     /**
+     * @var string
+     */
+    protected $primaryKey = 'uuid';
+
+    /**
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var string[]
@@ -34,7 +44,13 @@ final class Answer extends Model
      */
     protected $hidden = [
         '_id',
-        'created_at',
-        'updated_at',
     ];
+
+    /**
+     * @return bool
+     */
+    public function isCorrectAnswer(): bool
+    {
+        return $this->is_correct;
+    }
 }

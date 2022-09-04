@@ -43,6 +43,7 @@ final class GamePostController extends Controller
             auth()->user()->uuid,
             $request->get('category_id'),
             $request->get('time_played'),
+            $request->get('attempts'),
         );
 
         ($this->creator)($command);
@@ -58,8 +59,11 @@ final class GamePostController extends Controller
     private function getRequestRules(): array
     {
         return [
-            'category_id'   => 'required|string',
-            'time_played'   => 'required|numeric',
+            'category_id'               => 'required|string',
+            'time_played'               => 'required|numeric',
+            'attempts'                  => 'required|array',
+            'attempts.*.question_id'    => 'required|string',
+            'attempts.*.answer_id'      => 'required|string',
         ];
     }
 }

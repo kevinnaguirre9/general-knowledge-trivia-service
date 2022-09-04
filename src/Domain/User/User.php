@@ -2,10 +2,12 @@
 
 namespace GeneralKnowledgeTrivia\Domain\User;
 
+use GeneralKnowledgeTrivia\Domain\Game\Game;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Jenssegers\Mongodb\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
 
@@ -17,6 +19,11 @@ use Laravel\Lumen\Auth\Authorizable;
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable, HasFactory;
+
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'uuid';
 
     /**
      * The attributes that are mass assignable.
@@ -52,5 +59,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function can($abilities, $arguments = [])
     {
         // TODO: Implement can() method.
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function games(): HasMany
+    {
+        return $this->hasMany(Game::class);
     }
 }

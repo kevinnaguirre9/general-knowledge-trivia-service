@@ -6,6 +6,8 @@ use GeneralKnowledgeTrivia\Domain\Category\Category;
 use GeneralKnowledgeTrivia\Domain\User\User;
 use Jenssegers\Mongodb\Eloquent\Model;
 use Jenssegers\Mongodb\Relations\BelongsTo;
+use Jenssegers\Mongodb\Relations\EmbedsMany;
+use Jenssegers\Mongodb\Relations\EmbedsOne;
 
 /**
  * Class Game
@@ -28,7 +30,8 @@ final class Game extends Model
         'uuid',
         'user_id',
         'category_id',
-        'time_played',
+        'attempts',
+        'result',
     ];
 
     /**
@@ -57,4 +60,21 @@ final class Game extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    /**
+     * @return EmbedsMany
+     */
+    public function attempts(): EmbedsMany
+    {
+        return $this->embedsMany(Attempt::class);
+    }
+
+    /**
+     * @return EmbedsOne
+     */
+    public function result(): EmbedsOne
+    {
+        return $this->embedsOne(Result::class);
+    }
+
 }

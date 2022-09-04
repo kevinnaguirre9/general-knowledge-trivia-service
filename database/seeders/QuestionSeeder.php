@@ -55,6 +55,7 @@ final class QuestionSeeder extends Seeder
                 ...$QuestionCollection->except(['answers']),
             ];
 
+            /** @var Question $QuestionEntity */
             $QuestionEntity = Question::create($QuestionAttributes);
 
             $Answers = collect($QuestionCollection->get('answers'))

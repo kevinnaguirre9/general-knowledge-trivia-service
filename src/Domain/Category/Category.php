@@ -19,6 +19,11 @@ final class Category extends Model
     protected $collection = 'categories';
 
     /**
+     * @var string
+     */
+    protected $primaryKey = 'uuid';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var string[]
@@ -45,6 +50,6 @@ final class Category extends Model
      */
     public function questions(): HasMany
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Question::class, 'category_id');
     }
 }

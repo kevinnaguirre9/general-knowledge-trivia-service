@@ -15,11 +15,13 @@ final class CreateGameCommand
      * @param string $userId
      * @param string $categoryId
      * @param float $timePlayed
+     * @param array $attempts
      */
     public function __construct(
         private string $userId,
         private string $categoryId,
         private float $timePlayed,
+        private array $attempts,
     )
     {
     }
@@ -46,5 +48,13 @@ final class CreateGameCommand
     public function getTimePlayed(): float
     {
         return $this->timePlayed;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAttempts(): array
+    {
+        return $this->attempts;
     }
 }

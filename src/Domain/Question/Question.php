@@ -20,6 +20,11 @@ final class Question extends Model
     protected $collection = 'questions';
 
     /**
+     * @var string
+     */
+    protected $primaryKey = 'uuid';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var string[]
@@ -55,5 +60,15 @@ final class Question extends Model
     public function answers(): EmbedsMany
     {
         return $this->embedsMany(Answer::class);
+    }
+
+    /**
+     * @return Answer
+     */
+    public function getCorrectAnswer(): Answer
+    {
+        return $this->answers()
+            ->get()
+            ->firstWhere('is_correct', '=', true);
     }
 }
