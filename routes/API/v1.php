@@ -24,23 +24,24 @@ $router->post('/auth/sign-in', [
     'uses'  => \App\Http\Controllers\V1\Auth\AuthSignInPostController::class,
 ]);
 
+// Categories
+$router->get('/categories', [
+    'as'    => 'categories.getAll',
+    'uses'  => \App\Http\Controllers\V1\Category\CategoryGetAllController::class,
+]);
+
+$router->get('/categories/{category}/games', [
+    'as'    => 'categories.getGames',
+    'uses'  => \App\Http\Controllers\V1\Game\GamesByCriteriaGetController::class,
+]);
+
 
 $router->group(['middleware' => 'auth'], function() use ($router) {
 
     // Categories
-    $router->get('/categories', [
-        'as'    => 'categories.getAll',
-        'uses'  => \App\Http\Controllers\V1\Category\CategoryGetAllController::class,
-    ]);
-
     $router->get('/categories/{category}/questions', [
         'as'    => 'categories.getQuestions',
         'uses'  => \App\Http\Controllers\V1\Question\QuestionGetController::class,
-    ]);
-
-    $router->get('/categories/{category}/games', [
-        'as'    => 'categories.getGames',
-        'uses'  => \App\Http\Controllers\V1\Game\GamesByCriteriaGetController::class,
     ]);
 
     //Games
