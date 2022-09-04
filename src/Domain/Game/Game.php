@@ -1,28 +1,25 @@
 <?php
 
-namespace GeneralKnowledgeTrivia\Domain\Question;
+namespace GeneralKnowledgeTrivia\Domain\Game;
 
 use GeneralKnowledgeTrivia\Domain\Category\Category;
+use GeneralKnowledgeTrivia\Domain\User\User;
 use Jenssegers\Mongodb\Eloquent\Model;
-use Jenssegers\Mongodb\Relations\EmbedsMany;
 use Jenssegers\Mongodb\Relations\BelongsTo;
+use Jenssegers\Mongodb\Relations\EmbedsMany;
+use Jenssegers\Mongodb\Relations\EmbedsOne;
 
 /**
- * Class Question
+ * Class Game
  *
- * @package GeneralKnowledgeTrivia\Domain\Question
+ * @package GeneralKnowledgeTrivia\Domain\Game
  */
-final class Question extends Model
+final class Game extends Model
 {
     /**
      * @var string
      */
-    protected $collection = 'questions';
-
-    /**
-     * @var string
-     */
-    protected $primaryKey = 'uuid';
+    protected $collection = 'games';
 
     /**
      * The attributes that are mass assignable.
@@ -31,8 +28,10 @@ final class Question extends Model
      */
     protected $fillable = [
         'uuid',
-        'question',
-        'category_id'
+        'user_id',
+        'category_id',
+        'attempts',
+        'result',
     ];
 
     /**
@@ -49,6 +48,14 @@ final class Question extends Model
     /**
      * @return BelongsTo
      */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
@@ -57,18 +64,17 @@ final class Question extends Model
     /**
      * @return EmbedsMany
      */
-    public function answers(): EmbedsMany
+    public function attempts(): EmbedsMany
     {
-        return $this->embedsMany(Answer::class);
+        return $this->embedsMany(Attempt::class);
     }
 
     /**
-     * @return Answer
+     * @return EmbedsOne
      */
-    public function getCorrectAnswer(): Answer
+    public function result(): EmbedsOne
     {
-        return $this->answers()
-            ->get()
-            ->firstWhere('is_correct', '=', true);
+        return $this->embedsOne(Result::class);
     }
+
 }

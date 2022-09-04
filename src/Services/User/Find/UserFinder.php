@@ -2,6 +2,7 @@
 
 namespace GeneralKnowledgeTrivia\Services\User\Find;
 
+use GeneralKnowledgeTrivia\Domain\Common\Exceptions\InvalidUuid;
 use GeneralKnowledgeTrivia\Domain\User\User;
 use GeneralKnowledgeTrivia\Domain\User\ValueObjects\UserId;
 
@@ -13,13 +14,16 @@ use GeneralKnowledgeTrivia\Domain\User\ValueObjects\UserId;
 final class UserFinder
 {
     /**
-     * @param UserId $userId
-     * @return mixed
+     * @param FindUserQuery $query
+     * @return User|null
+     * @throws InvalidUuid
      */
-    public function __invoke(UserId $userId): mixed
+    public function __invoke(FindUserQuery $query): ?User
     {
+        $UserId = new UserId($query->getUserId());
+
         return User::firstWhere(
-            'uuid', '=', $userId->value()
-        )->get();
+            'uuid', '=', $UserId->value()
+        );
     }
 }
