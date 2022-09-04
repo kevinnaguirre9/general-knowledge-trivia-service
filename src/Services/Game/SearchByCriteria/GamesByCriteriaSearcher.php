@@ -1,21 +1,19 @@
 <?php
 
-namespace GeneralKnowledgeTrivia\Services\Question\SearchByCriteria;
+namespace GeneralKnowledgeTrivia\Services\Game\SearchByCriteria;
 
-use GeneralKnowledgeTrivia\Domain\Category\Category;
 use GeneralKnowledgeTrivia\Domain\Category\Exceptions\CategoryNotFound;
 use GeneralKnowledgeTrivia\Domain\Common\Exceptions\InvalidUuid;
-use GeneralKnowledgeTrivia\Domain\Question\Question;
+use GeneralKnowledgeTrivia\Domain\Game\Game;
 use GeneralKnowledgeTrivia\Services\Category\Find\CategoryFinder;
 use GeneralKnowledgeTrivia\Services\Category\Find\FindCategoryQuery;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
- * Class QuestionsByCriteriaSearcher
+ * Class GamesByCriteriaSearcher
  *
- * @package GeneralKnowledgeTrivia\Services\Question\SearchByCriteria
+ * @package GeneralKnowledgeTrivia\Services\Game\SearchByCriteria
  */
-final class QuestionsByCriteriaSearcher
+final class GamesByCriteriaSearcher
 {
     /**
      * @param CategoryFinder $categoryFinder
@@ -25,19 +23,18 @@ final class QuestionsByCriteriaSearcher
     }
 
     /**
-     * @param SearchQuestionsByCriteriaQuery $query
-     * @return Collection
+     * @param SearchGamesByCriteriaQuery $query
+     * @return mixed
      * @throws CategoryNotFound
      * @throws InvalidUuid
      */
-    public function __invoke(SearchQuestionsByCriteriaQuery $query): Collection
+    public function __invoke(SearchGamesByCriteriaQuery $query): mixed
     {
         $Category = ($this->categoryFinder)(
             new FindCategoryQuery($query->getCategoryId())
         );
 
-        return $Category
-            ->questions()
-            ->get();
+        return Game::where('category_id', '=', $Category->getUuid())
+            ->paginate();
     }
 }

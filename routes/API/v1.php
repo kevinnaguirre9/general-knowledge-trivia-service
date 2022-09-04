@@ -38,6 +38,11 @@ $router->group(['middleware' => 'auth'], function() use ($router) {
         'uses'  => \App\Http\Controllers\V1\Question\QuestionGetController::class,
     ]);
 
+    $router->get('/categories/{category}/games', [
+        'as'    => 'categories.getGames',
+        'uses'  => \App\Http\Controllers\V1\Game\GamesByCriteriaGetController::class,
+    ]);
+
     //Games
     $router->post('/games', [
         'as'    => 'categories.getQuestions',

@@ -1,15 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
-namespace GeneralKnowledgeTrivia\Services\Question\SearchByCriteria;
+namespace GeneralKnowledgeTrivia\Services\Game\SearchByCriteria;
 
 /**
- * Class SearchQuestionsByCriteriaQuery
+ * Class SearchGamesByCriteriaQuery
  *
- * @package GeneralKnowledgeTrivia\Services\Question\SearchByCriteria
+ * @package GeneralKnowledgeTrivia\Services\Game\SearchByCriteria
  */
-final class SearchQuestionsByCriteriaQuery
+final class SearchGamesByCriteriaQuery
 {
     /**
      * @param string $categoryId

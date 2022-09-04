@@ -52,4 +52,9 @@ final class Category extends Model
     {
         return $this->hasMany(Question::class, 'category_id');
     }
+
+    public function getUuid(): string
+    {
+        return $this->uuid;
+    }
 }
