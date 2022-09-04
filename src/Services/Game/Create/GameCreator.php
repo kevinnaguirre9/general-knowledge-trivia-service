@@ -39,12 +39,12 @@ final class GameCreator
 
     /**
      * @param CreateGameCommand $command
-     * @return void
+     * @return array
      * @throws CategoryNotFound
      * @throws InvalidUuid
      * @throws UserNotFound
      */
-    public function __invoke(CreateGameCommand $command)
+    public function __invoke(CreateGameCommand $command): array
     {
         $questions = ($this->questionsSearcher)(
             new SearchQuestionsByCriteriaQuery($command->getCategoryId())
@@ -72,6 +72,9 @@ final class GameCreator
 
         $Game->result()
             ->save($Result);
+
+        return $Game
+            ->toArray();
     }
 
     /**

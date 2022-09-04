@@ -46,10 +46,10 @@ final class GamePostController extends Controller
             $request->get('attempts'),
         );
 
-        ($this->creator)($command);
+        $Game = ($this->creator)($command);
 
         return response()->json([
-            'message' => 'Game information stored successfully',
+            'game'      => $Game,
         ], Response::HTTP_CREATED);
     }
 
