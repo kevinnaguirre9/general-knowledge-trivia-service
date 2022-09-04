@@ -13,6 +13,7 @@
 |
 */
 
+// Auth
 $router->post('/auth/sign-up', [
     'as'    => 'auth.signUp',
     'uses'  => \App\Http\Controllers\V1\Auth\AuthSignUpPostController::class,
@@ -23,8 +24,10 @@ $router->post('/auth/sign-in', [
     'uses'  => \App\Http\Controllers\V1\Auth\AuthSignInPostController::class,
 ]);
 
+
 $router->group(['middleware' => 'auth'], function() use ($router) {
 
+    // Categories
     $router->get('/categories', [
         'as'    => 'categories.getAll',
         'uses'  => \App\Http\Controllers\V1\Category\CategoryGetAllController::class,
@@ -35,6 +38,13 @@ $router->group(['middleware' => 'auth'], function() use ($router) {
         'uses'  => \App\Http\Controllers\V1\Question\QuestionGetController::class,
     ]);
 
+    //Games
+    $router->post('/games', [
+        'as'    => 'categories.getQuestions',
+        'uses'  => \App\Http\Controllers\V1\Game\GamePostController::class,
+    ]);
+
+    // Auth
     $router->delete('/auth/sign-out', [
         'as'    => 'auth.signOut',
         'uses'  => \App\Http\Controllers\V1\Auth\AuthSignOutDeleteController::class,

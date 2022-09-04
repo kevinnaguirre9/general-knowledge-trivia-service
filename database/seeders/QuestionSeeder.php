@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
  *
  * @package Database\Seeders
  */
-class QuestionSeeder extends Seeder
+final class QuestionSeeder extends Seeder
 {
     private const QUESTIONS = __DIR__ . '/questions.json';
 

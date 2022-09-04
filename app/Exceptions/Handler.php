@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use GeneralKnowledgeTrivia\Domain\Auth\Exceptions\InvalidAuthCredentials;
 use GeneralKnowledgeTrivia\Domain\Auth\Exceptions\InvalidToken;
+use GeneralKnowledgeTrivia\Domain\Category\Exceptions\CategoryNotFound;
 use GeneralKnowledgeTrivia\Domain\Common\Exceptions\InvalidUuid;
 use GeneralKnowledgeTrivia\Domain\User\Exceptions\InvalidEmail;
 use GeneralKnowledgeTrivia\Domain\User\Exceptions\InvalidPassword;
@@ -57,6 +58,7 @@ class Handler extends ExceptionHandler
      */
     protected array $notFoundExceptions = [
         UserNotFound::class,
+        CategoryNotFound::class,
     ];
 
     /**
