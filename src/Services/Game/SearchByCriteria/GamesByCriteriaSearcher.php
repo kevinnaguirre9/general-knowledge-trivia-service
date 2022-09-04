@@ -34,7 +34,10 @@ final class GamesByCriteriaSearcher
             new FindCategoryQuery($query->getCategoryId())
         );
 
-        return Game::where('category_id', '=', $Category->getUuid())
+        return Game::with(['user'])
+            ->where('category_id', '=', $Category->getUuid())
+            ->orderBy('result.right_answers', 'desc')
+            ->orderBy('result.time_played')
             ->paginate();
     }
 }
